@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  spring: # 服务名称，随意
+    container_name: app_springboot  # build表示使用构建的镜像，.表示使用当前目录下的Dockerfile进行构建
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on: # 这里设置一下依赖，需要等待mysql启动后才运行，但是没啥用，这个并不是等到启动完成后，而是进程建立就停止等待
+      - mysql
+    restart: always  # 这里配置容器停止后自动重启
+  mysql:
+    container_name: app_mysql
+    image: mysql:latest  # image表示使用对应的镜像，这里会自动从仓库下载，然后启动容器
+    environment:
+      MYSQL_ROOT_HOST: '%'   # 登陆的主机，这里直接配置为'%'
+      MYSQL_ROOT_PASSWORD: 'root'    # MySQL root账号的密码，别设定得太简单了
+      MYSQL_DATABASE: 'study'    # 在启动时自动创建的数据库
+      TZ: 'Asia/Shanghai'    # 时区
+#    ports:
+#      - "3307:3306"  # 三个容器可以互通，这个是为了方便调试
+  redis:
+    container_name: app_redis
+    image: redis:latest
+#    ports:
+#      - "3307:3306"  # 三个容器可以互通，这个是为了方便调试
+
+

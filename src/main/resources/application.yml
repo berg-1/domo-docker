@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://app_mysql:3306/study  # 地址直接输入容器名称，会自动进行解析，前面已经讲过了
+    username: root
+    password: root
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update  # 这里自动执行DDL创建表，全程自动化，尽可能做到开箱即用
+  redis:
+    host: app_redis  # Redis 连接地址
